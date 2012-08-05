@@ -1,4 +1,7 @@
+using System.Web;
 using FubuMVC.Core;
+using FubuMVC.Razor;
+using nfl_outlast.Endpoints.Home;
 
 namespace nfl_outlast
 {
@@ -11,17 +14,24 @@ namespace nfl_outlast
 
             // All public methods from concrete classes ending in "Controller"
             // in this assembly are assumed to be action methods
-            Actions.IncludeClassesSuffixedWithController();
-
+            Actions.IncludeTypesNamed(x => x.EndsWith("Endpoint"));            
+            
             // Policies
             Routes
-                .IgnoreControllerNamesEntirely()
+                .IgnoreControllerNamespaceEntirely()      
+                .IgnoreClassSuffix("Endpoint")
+                .ConstrainToHttpMethod(x => x.InputType().Name.EndsWith("Request"), "GET")
+                .ConstrainToHttpMethod(x => x.InputType().Name.EndsWith("Command"), "POST")                
                 .IgnoreMethodSuffix("Html")
-                .RootAtAssemblyNamespace();
+                .HomeIs<HomeRequest>()
+                .RootAtAssemblyNamespace();            
+
+            Assets.CombineAllUniqueAssetRequests();
 
             // Match views to action methods by matching
             // on model type, view name, and namespace
+            Import<RazorEngineRegistry>();
             Views.TryToAttachWithDefaultConventions();
         }
-    }
+    }     
 }

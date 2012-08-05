@@ -1,0 +1,13 @@
+﻿@using nfl_outlast.Endpoints.Users
+@model nfl_outlast.Endpoints.Users.NewUserViewModel
+
+@(this.FormFor<NewUserCommand>().Id("new-user-form"))
+@this.LabelFor(x => x.User.Login)
+@this.InputFor(x => x.User.Login)
+@this.LabelFor(x => x.User.Password)
+@this.InputFor(x => x.User.Password)
+@this.LabelFor(x => x.User.FirstName)
+@this.InputFor(x => x.User.FirstName)
+@this.LabelFor(x => x.User.LastName)
+@this.InputFor(x => x.User.LastName)
+<input type="submit" value="Save" />
