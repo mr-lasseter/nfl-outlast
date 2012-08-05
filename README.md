@@ -1,4 +1,1 @@
-nfl-outlast
-===========
-
-nfl survivor
+NFL Survivor Website using fubumvc and RavenDb.
