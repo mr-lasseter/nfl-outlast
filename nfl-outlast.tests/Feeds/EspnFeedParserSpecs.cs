@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using nfl_outlast.Feeds;
 
 namespace nfl_outlast.tests.Feeds
 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace nfl_outlast.tests.Feeds
+namespace nfl_outlast.Feeds
 {
     public class EspnFeed
     {

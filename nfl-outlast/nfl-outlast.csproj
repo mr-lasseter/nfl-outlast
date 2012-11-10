@@ -144,6 +144,7 @@
     <Compile Include="Endpoints\Login\LoginEndpoint.cs" />
     <Compile Include="Endpoints\Users\UsersEndpoint.cs" />
     <Compile Include="Feeds\EspnFeed.cs" />
+    <Compile Include="Feeds\EspnFeedFetcher.cs" />
     <Compile Include="Feeds\EspnFeedGame.cs" />
     <Compile Include="Feeds\EspnFeedParser.cs" />
     <Compile Include="Feeds\EspnFeedTeam.cs" />
@@ -154,6 +155,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Extensions.cs" />
+    <Compile Include="Utility\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

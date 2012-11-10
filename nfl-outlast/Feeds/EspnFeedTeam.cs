@@ -1,4 +1,4 @@
-namespace nfl_outlast.tests.Feeds
+namespace nfl_outlast.Feeds
 {
     public class EspnFeedTeam
     {

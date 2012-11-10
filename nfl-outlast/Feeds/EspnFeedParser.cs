@@ -1,6 +1,6 @@
 using nfl_outlast.Shared;
 
-namespace nfl_outlast.tests.Feeds
+namespace nfl_outlast.Feeds
 {
     public class EspnFeedParser
     {
