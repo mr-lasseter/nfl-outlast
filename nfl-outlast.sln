@@ -1,5 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E7FB88D7-1881-41D6-8266-5965A2657DCD}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nfl-outlast", "nfl-outlast\nfl-outlast.csproj", "{E58491C9-D8E0-4FE5-BE0F-8EF14AEC61E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nfl-outlast.tests", "nfl-outlast.tests\nfl-outlast.tests.csproj", "{C78F9793-37A8-4CC9-93F3-7867F80A8F59}"
