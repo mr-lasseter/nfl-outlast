@@ -29,12 +29,24 @@ namespace nfl_outlast.tests.Feeds
 
                 var game = feed.Games.First();
 
-                game.HomeTeam.Name.ShouldEqual("Jacksonville");
-                game.HomeTeam.Score.ShouldEqual(10);
                 game.AwayTeam.Name.ShouldEqual("Indianapolis");
                 game.AwayTeam.Score.ShouldEqual(27);
+                game.HomeTeam.Name.ShouldEqual("Jacksonville");
+                game.HomeTeam.Score.ShouldEqual(10);
             }
-        
+
+            [Test]
+            public void Should_parse_home_vs_away_for_a_game_that_has_not_started()
+            {
+                var feed = ExecuteSUT();
+
+                var game = feed.Games[1];
+                
+                game.AwayTeam.Name.ShouldEqual("NY Giants");
+                game.AwayTeam.Score.ShouldEqual(0);
+                game.HomeTeam.Name.ShouldEqual("Cincinnati");
+                game.HomeTeam.Score.ShouldEqual(0);
+            }
 
             private EspnFeed ExecuteSUT()
             {
@@ -45,6 +57,13 @@ namespace nfl_outlast.tests.Feeds
 
     public class EspnFeedParser
     {
+        private readonly EspnGameParser _gameParser;
+
+        public EspnFeedParser()
+        {
+            _gameParser = new EspnGameParser();
+        }
+
         public EspnFeed Parse(string rawFeed)
         {
             var feed = new EspnFeed();
@@ -53,39 +72,66 @@ namespace nfl_outlast.tests.Feeds
             rawFeed = rawFeed.Replace("^", "");
             var games = rawFeed.Split("nfl_s_left");
 
-            for (int i = 1; i < games.Length; i++)
+            for (var i = 1; i < games.Length; i++)
             {
-                var firstEqualSign = games[i].Index("=") + 1;
-                var firstAndSign = games[i].Index("&");
-                var gameDetails = games[i].Substring(firstEqualSign, firstAndSign - firstEqualSign);
-
-                if (gameDetails.Contains("(FINAL)"))
-                {
-                    var rawGameDetails = gameDetails.Replace(" (FINAL)", "");
-                    var rawTeamDetails = rawGameDetails.Split("   ");
-                    var lastSpace = rawTeamDetails[0].LastIndexOf(' ');
-                    var awayTeam = new EspnFeedTeam
-                        {
-                            Name = rawTeamDetails[0].Substring(0, lastSpace),
-                            Score = int.Parse(rawTeamDetails[0].Substring(lastSpace))
-                        };
-
-                    var homeTeam = new EspnFeedTeam
-                    {
-                        Name = rawTeamDetails[1].Substring(0, lastSpace),
-                        Score = int.Parse(rawTeamDetails[1].Substring(lastSpace))
-                    };
-
-                    feed.AddGame(new EspnFeedGame(homeTeam, awayTeam));
-
-                }
-                else
-                {
-                    feed.AddGame(new EspnFeedGame(new EspnFeedTeam(), new EspnFeedTeam()));
-                }
+                var game = _gameParser.ParseGame(games[i]);
+                feed.AddGame(game);
             }
 
             return feed;
+        }
+    }
+
+    public class EspnGameParser
+    {
+        public EspnFeedGame ParseGame(string game)
+        {
+            var firstEqualSign = game.Index("=") + 1;
+            var firstAndSign = game.Index("&");
+            var gameDetails = game.Substring(firstEqualSign, firstAndSign - firstEqualSign);
+
+            if (gameDetails.Contains("(FINAL)"))
+            {
+                return ParseFinishedGames(gameDetails);
+            }
+            
+            if (gameDetails.Contains(" at "))
+            {
+                return ParseNotStartedGames(game, gameDetails);
+            }
+
+            //TODO:  Figure out what the feed looks like for during game
+            return new EspnFeedGame(new EspnFeedTeam(), new EspnFeedTeam());
+        }
+
+        private EspnFeedGame ParseNotStartedGames(string game, string gameDetails)
+        {
+            var firstParen = game.Index("(");
+            var rawGameDetails = gameDetails.Substring(0, firstParen - 2).Trim();
+            var rawTeamDetails = rawGameDetails.Split(" at ");
+            var awayTeam = new EspnFeedTeam {Name = rawTeamDetails[0]};
+            var homeTeam = new EspnFeedTeam {Name = rawTeamDetails[1]};
+            return new EspnFeedGame(awayTeam, homeTeam);
+        }
+
+        private EspnFeedGame ParseFinishedGames(string gameDetails)
+        {
+            var rawGameDetails = gameDetails.Replace(" (FINAL)", "");
+            var rawTeamDetails = rawGameDetails.Split("   ");
+            var lastSpace = rawTeamDetails[0].LastIndexOf(' ');
+            var awayTeam = new EspnFeedTeam
+                {
+                    Name = rawTeamDetails[0].Substring(0, lastSpace),
+                    Score = int.Parse(rawTeamDetails[0].Substring(lastSpace))
+                };
+
+            var homeTeam = new EspnFeedTeam
+                {
+                    Name = rawTeamDetails[1].Substring(0, lastSpace),
+                    Score = int.Parse(rawTeamDetails[1].Substring(lastSpace))
+                };
+
+            return new EspnFeedGame(awayTeam, homeTeam);
         }
     }
 
@@ -111,13 +157,14 @@ namespace nfl_outlast.tests.Feeds
 
     public class EspnFeedGame
     {
-        public EspnFeedTeam HomeTeam { get; set; }
         public EspnFeedTeam AwayTeam { get; set; }
+        public EspnFeedTeam HomeTeam { get; set; }
+        
 
-        public EspnFeedGame(EspnFeedTeam homeTeam, EspnFeedTeam awayTeam)
+        public EspnFeedGame(EspnFeedTeam awayTeam, EspnFeedTeam homeTeam)
         {
-            HomeTeam = homeTeam;
             AwayTeam = awayTeam;
+            HomeTeam = homeTeam;            
         }
     }
 
