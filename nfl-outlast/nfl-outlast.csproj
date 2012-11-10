@@ -143,6 +143,12 @@
     <Compile Include="Endpoints\Home\HomeEndpoint.cs" />
     <Compile Include="Endpoints\Login\LoginEndpoint.cs" />
     <Compile Include="Endpoints\Users\UsersEndpoint.cs" />
+    <Compile Include="Feeds\EspnFeed.cs" />
+    <Compile Include="Feeds\EspnFeedGame.cs" />
+    <Compile Include="Feeds\EspnFeedParser.cs" />
+    <Compile Include="Feeds\EspnFeedTeam.cs" />
+    <Compile Include="Feeds\EspnGameParser.cs" />
+    <Compile Include="Feeds\GameStatus.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -152,9 +158,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Feeds\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fubu-content\fubumvc-diagnostics.zip" />
   </ItemGroup>
