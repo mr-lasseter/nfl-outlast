@@ -1,14 +1,15 @@
 using nfl_outlast.Shared;
+using System.Linq;
 
 namespace nfl_outlast.Feeds
 {
     public class EspnFeedParser
     {
-        private readonly EspnGameParser _gameParser;
+        private readonly IEspnGameParser[] _gameParsers;
 
-        public EspnFeedParser()
+        public EspnFeedParser(IEspnGameParser[] gameParsers)
         {
-            _gameParser = new EspnGameParser();
+            _gameParsers = gameParsers;
         }
 
         public EspnFeed Parse(string rawFeed)
@@ -17,11 +18,15 @@ namespace nfl_outlast.Feeds
 
             rawFeed = rawFeed.Replace("%20", " ");
             rawFeed = rawFeed.Replace("^", "");
-            var games = rawFeed.Split("nfl_s_left");
+            var rawGames = rawFeed.Split("nfl_s_left");
 
-            for (var i = 1; i < games.Length; i++)
+            for (var i = 1; i < rawGames.Length; i++)
             {
-                var game = _gameParser.ParseGame(games[i]);
+                var gameDetails = rawGames[i];
+                var game = _gameParsers
+                            .First(x => x.CanParse(gameDetails))
+                            .ParseGame(gameDetails);
+                
                 feed.AddGame(game);
             }
 

@@ -9,7 +9,7 @@ namespace nfl_outlast.Feeds
         private readonly EspnFeedParser _parser;
         public EspnFeedFetcher()
         {
-            _parser = new EspnFeedParser();
+            _parser = new EspnFeedParser(new IEspnGameParser[] {new EspnFinalGameParser(), new EspnInProgressGameParser(), new EspnNotStartedGameParser() });
         }
 
         public EspnFeed Fetch()
