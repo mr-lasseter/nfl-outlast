@@ -1,4 +1,6 @@
+using System;
 using nfl_outlast.Shared;
+using System.Linq;
 
 namespace nfl_outlast.Feeds
 {
@@ -10,19 +12,18 @@ namespace nfl_outlast.Feeds
             var firstAndSign = game.Index("&");
             var gameDetails = game.Substring(firstEqualSign, firstAndSign - firstEqualSign);
 
-            EspnFeedGame feedGame;
+            EspnFeedGame feedGame = null;
             if (gameDetails.Contains("(FINAL)") || gameDetails.Contains("(FINAL - OT)"))
             {
-                feedGame = ParseFinishedGames(gameDetails);
+                feedGame = ParseFinishedGame(gameDetails);
             }
             else if (gameDetails.Contains(" at "))
             {
-                feedGame = ParseNotStartedGames(gameDetails);
+                feedGame = ParseNotStartedGame(gameDetails);
             }
-            else
+            else if (gameDetails.Contains(" IN "))
             {
-                //TODO:  Figure out what the feed looks like for during game
-                feedGame = new EspnFeedGame(new EspnFeedTeam(), new EspnFeedTeam(), GameStatus.InProgress);
+                feedGame = ParseInProgressGame(gameDetails);
             }
 
             var rawDataUrl = game.Split("nfl_s_url")[1];
@@ -33,7 +34,43 @@ namespace nfl_outlast.Feeds
             return feedGame;
         }
 
-        private EspnFeedGame ParseNotStartedGames(string gameDetails)
+        private EspnFeedGame ParseInProgressGame(string gameDetails)
+        {
+            var lastClosedParen = gameDetails.LastIndexOf(")");
+            var lastOpenParen = gameDetails.LastIndexOf("(");
+
+            var timeLeftOnClock = gameDetails.Substring(lastOpenParen, lastClosedParen - lastOpenParen + 1);
+            var scoreDetails = gameDetails.Replace(timeLeftOnClock, "").Trim();
+            var teamScoreDetails = scoreDetails.Split("   ");
+
+            var lastSpace = teamScoreDetails[0].LastIndexOf(' ');
+            var awayTeam = new EspnFeedTeam
+            {
+                Name = teamScoreDetails[0].Substring(0, lastSpace),
+                Score = int.Parse(teamScoreDetails[0].Substring(lastSpace))
+            };
+
+            lastSpace = teamScoreDetails[1].LastIndexOf(' ');
+            var homeTeam = new EspnFeedTeam
+            {
+                Name = teamScoreDetails[1].Substring(0, lastSpace),
+                Score = int.Parse(teamScoreDetails[1].Substring(lastSpace))
+            };
+
+            var timeAndQuarter = timeLeftOnClock.Split(" IN ");
+            var timeLeft = new string(timeAndQuarter[0].Where(char.IsNumber).ToArray());
+            var minutesLeft = int.Parse(timeLeft.Substring(0, 2));
+            var secondsLeft = int.Parse(timeLeft.Substring(2, 2));
+            var quarter = int.Parse(new string(timeAndQuarter[1].Where(char.IsNumber).ToArray()));
+
+            var game = new EspnFeedGame(awayTeam, homeTeam, GameStatus.InProgress);
+            game.TimeLeftInQuarter = new TimeSpan(0, minutesLeft, secondsLeft);
+            game.CurrentQuarter = quarter;
+            return game;
+
+        }
+
+        private EspnFeedGame ParseNotStartedGame(string gameDetails)
         {
             var firstParen = gameDetails.Index("(");
             var rawGameDetails = gameDetails.Substring(0, firstParen).Trim();
@@ -45,11 +82,11 @@ namespace nfl_outlast.Feeds
             var time = timeDetails.Trim('(').Trim(')');
 
             var game = new EspnFeedGame(awayTeam, homeTeam, GameStatus.NotStarted);
-            game.Time = time;
+            game.KickoffTime = time;
             return game;
         }
 
-        private EspnFeedGame ParseFinishedGames(string gameDetails)
+        private EspnFeedGame ParseFinishedGame(string gameDetails)
         {
             var rawGameDetails = gameDetails.Replace(" (FINAL)", "");
             rawGameDetails = rawGameDetails.Replace(" (FINAL - OT)", "");
@@ -68,7 +105,8 @@ namespace nfl_outlast.Feeds
                     Score = int.Parse(rawTeamDetails[1].Substring(lastSpace))
                 };
 
-            return new EspnFeedGame(awayTeam, homeTeam, rawGameDetails.Contains("(FINAL)") ? GameStatus.Final : GameStatus.FinalInOvertime);
+            var gameStatus = gameDetails.Contains("(FINAL)") ? GameStatus.Final : GameStatus.FinalInOvertime;
+            return new EspnFeedGame(awayTeam, homeTeam, gameStatus);
         }
     }
 }
