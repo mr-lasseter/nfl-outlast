@@ -1,0 +1,8 @@
+﻿@using nfl_outlast.Endpoints.Users
+@model nfl_outlast.Endpoints.Home.HomeViewModel
+<div class="hero-unit">
+    <h1>
+        Welcome to blah blah blah
+    </h1>
+</div>
+@(this.LinkTo<NewUserRequest>().Text("New"))

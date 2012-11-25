@@ -61,7 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feeds\EspnFeedParserSpecs.cs" />
+    <Compile Include="Feeds\EspnFeedFetcherSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestingExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nfl-outlast\nfl-outlast.csproj">
@@ -70,6 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
