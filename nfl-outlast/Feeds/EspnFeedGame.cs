@@ -1,3 +1,5 @@
+using System;
+
 namespace nfl_outlast.Feeds
 {
     public class EspnFeedGame
@@ -6,7 +8,9 @@ namespace nfl_outlast.Feeds
         public EspnFeedTeam HomeTeam { get; set; }
         public GameStatus Status { get; set; }
         public string GameUrl { get; set; }
-        public string Time { get; set; }
+        public string KickoffTime { get; set; }
+        public int CurrentQuarter { get; set; }
+        public TimeSpan? TimeLeftInQuarter { get; set; }
 
         public EspnFeedGame(EspnFeedTeam awayTeam, EspnFeedTeam homeTeam, GameStatus status)
         {

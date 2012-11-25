@@ -4,9 +4,6 @@ using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap;
 
-// You can remove the reference to WebActivator by calling the Start() method from your Global.asax Application_Start
-[assembly: WebActivator.PreApplicationStartMethod(typeof(nfl_outlast.App_Start.AppStartFubuMVC), "Start", callAfterGlobalAppStart: true)]
-
 namespace nfl_outlast.App_Start
 {
     public static class AppStartFubuMVC
