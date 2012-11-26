@@ -52,3 +52,4 @@ Thumbs.db    # Having images in the source tree generates those files in Explore
 # Resharper Files
 _ReSharper.*
 *.resharper.user
+*ncrunch*

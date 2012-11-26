@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using nfl_outlast.App_Start;
 
 namespace nfl_outlast
 {
@@ -12,7 +13,7 @@ namespace nfl_outlast
 
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
+            AppStartFubuMVC.Start();
 
         }
 

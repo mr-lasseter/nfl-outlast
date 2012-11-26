@@ -4,6 +4,7 @@ namespace nfl_outlast.Feeds
     {
         NotStarted,
         InProgress,
-        Finished
+        Final,
+        FinalInOvertime
     }
 }

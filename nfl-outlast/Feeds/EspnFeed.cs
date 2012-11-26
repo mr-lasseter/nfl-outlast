@@ -12,15 +12,9 @@ namespace nfl_outlast.Feeds
             Games = new List<EspnFeedGame>();
         }
 
-        public int GameCount()
-        {
-            return Games.Count();
-        }
-
         public void AddGame(EspnFeedGame game)
         {
             Games.Add(game);
-        }
-       
+        }       
     }
 }
