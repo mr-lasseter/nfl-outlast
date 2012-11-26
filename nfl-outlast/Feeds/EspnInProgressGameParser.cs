@@ -8,7 +8,7 @@ namespace nfl_outlast.Feeds
     {
         protected override bool CanParseGameDetails(string gameDetails)
         {
-            return gameDetails.Contains(" IN ");
+            return gameDetails.Contains(" IN ") || gameDetails.Contains("HALFTIME");
         }
 
         protected override EspnFeedGame ParseGameDetails(string gameDetails)
@@ -34,15 +34,24 @@ namespace nfl_outlast.Feeds
                     Score = int.Parse(teamScoreDetails[1].Substring(lastSpace))
                 };
 
-            var timeAndQuarter = timeLeftOnClock.Split(" IN ");
-            var timeLeft = new string(timeAndQuarter[0].Where(char.IsNumber).ToArray());
-            var minutesLeft = int.Parse(timeLeft.Substring(0, 2));
-            var secondsLeft = int.Parse(timeLeft.Substring(2, 2));
-            var quarter = int.Parse(new string(timeAndQuarter[1].Where(char.IsNumber).ToArray()));
-
             var game = new EspnFeedGame(awayTeam, homeTeam, GameStatus.InProgress);
-            game.TimeLeftInQuarter = new TimeSpan(0, minutesLeft, secondsLeft);
-            game.CurrentQuarter = quarter;
+
+            if (timeLeftOnClock.Contains(" IN "))
+            {
+                var timeAndQuarter = timeLeftOnClock.Split(" IN ");
+                var timeLeft = new string(timeAndQuarter[0].Where(char.IsNumber).ToArray());
+                var minutesLeft = int.Parse(timeLeft.Substring(0, 2));
+                var secondsLeft = int.Parse(timeLeft.Substring(2, 2));
+                var quarter = int.Parse(new string(timeAndQuarter[1].Where(char.IsNumber).ToArray()));
+                game.TimeLeftInQuarter = new TimeSpan(0, minutesLeft, secondsLeft);
+                game.CurrentQuarter = quarter;
+            }
+            else if(timeLeftOnClock.Contains("HALFTIME"))
+            {
+                game.TimeLeftInQuarter = new TimeSpan(0, 15, 0);
+                game.CurrentQuarter = 3;
+            }
+
             return game;
         }
     }
