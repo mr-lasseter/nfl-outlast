@@ -66,13 +66,18 @@ namespace nfl_outlast.tests.Feeds
             private const string inGameFeed =
                 @"&nfl_s_delay=120&nfl_s_stamp=1125123848&nfl_s_left1=^Houston%2034%20%20%20Detroit%2031%20(FINAL%20-%20OT)&nfl_s_right1_count=0&nfl_s_url1=http://sports.espn.go.com/nfl/boxscore?gameId=321122008&nfl_s_left2=^Washington%2038%20%20%20Dallas%2031%20(FINAL)&nfl_s_right2_count=0&nfl_s_url2=http://sports.espn.go.com/nfl/boxscore?gameId=321122006&nfl_s_left3=^New%20England%2049%20%20%20NY%20Jets%2019%20(FINAL)&nfl_s_right3_count=0&nfl_s_url3=http://sports.espn.go.com/nfl/boxscore?gameId=321122020&nfl_s_left4=Minnesota%2010%20%20%20Chicago%2028%20(09:30%20IN%204TH)&nfl_s_right4_count=0&nfl_s_url4=http://sports.espn.go.com/nfl/boxscore?gameId=321125003&nfl_s_left5=Oakland%2010%20%20%20Cincinnati%2027%20(09:08%20IN%204TH)&nfl_s_right5_count=0&nfl_s_url5=http://sports.espn.go.com/nfl/boxscore?gameId=321125004&nfl_s_left6=Pittsburgh%2014%20%20%20Cleveland%2020%20(09:19%20IN%204TH)&nfl_s_right6_count=0&nfl_s_url6=http://sports.espn.go.com/nfl/boxscore?gameId=321125005&nfl_s_left7=Buffalo%2012%20%20%20Indianapolis%2020%20(11:30%20IN%204TH)&nfl_s_right7_count=0&nfl_s_url7=http://sports.espn.go.com/nfl/boxscore?gameId=321125011&nfl_s_left8=Denver%2014%20%20%20Kansas%20City%209%20(07:53%20IN%204TH)&nfl_s_right8_count=0&nfl_s_url8=http://sports.espn.go.com/nfl/boxscore?gameId=321125012&nfl_s_left9=Seattle%2021%20%20%20Miami%2021%20(05:13%20IN%204TH)&nfl_s_right9_count=0&nfl_s_url9=http://sports.espn.go.com/nfl/boxscore?gameId=321125015&nfl_s_left10=Atlanta%2024%20%20%20Tampa%20Bay%2023%20(05:49%20IN%204TH)&nfl_s_right10_count=0&nfl_s_url10=http://sports.espn.go.com/nfl/boxscore?gameId=321125027&nfl_s_left11=Tennessee%2012%20%20%20Jacksonville%2014%20(07:03%20IN%204TH)&nfl_s_right11_count=0&nfl_s_url11=http://sports.espn.go.com/nfl/boxscore?gameId=321125030&nfl_s_left12=Baltimore%20at%20San%20Diego%20(4:05%20PM%20ET)&nfl_s_right12_count=0&nfl_s_url12=http://sports.espn.go.com/nfl/preview?gameId=321125024&nfl_s_left13=San%20Francisco%20at%20New%20Orleans%20(4:25%20PM%20ET)&nfl_s_right13_count=0&nfl_s_url13=http://sports.espn.go.com/nfl/preview?gameId=321125018&nfl_s_left14=St.%20Louis%20at%20Arizona%20(4:25%20PM%20ET)&nfl_s_right14_count=0&nfl_s_url14=http://sports.espn.go.com/nfl/preview?gameId=321125022&nfl_s_left15=Green%20Bay%20at%20NY%20Giants%20(8:20%20PM%20ET)&nfl_s_right15_count=0&nfl_s_url15=http://sports.espn.go.com/nfl/preview?gameId=321125019&nfl_s_left16=Carolina%20at%20Philadelphia%20(8:30%20PM%20ET)&nfl_s_right16_count=0&nfl_s_url16=http://sports.espn.go.com/nfl/preview?gameId=321126021&nfl_s_count=16&nfl_s_loaded=true";
 
+            private const string halftimeFeed =
+                @"&nfl_s_delay=120&nfl_s_stamp=1125070355&nfl_s_left1=^Houston%2034%20%20%20Detroit%2031%20(FINAL%20-%20OT)&nfl_s_right1_count=0&nfl_s_url1=http://sports.espn.go.com/nfl/boxscore?gameId=321122008&nfl_s_left2=^Washington%2038%20%20%20Dallas%2031%20(FINAL)&nfl_s_right2_count=0&nfl_s_url2=http://sports.espn.go.com/nfl/boxscore?gameId=321122006&nfl_s_left3=^New%20England%2049%20%20%20NY%20Jets%2019%20(FINAL)&nfl_s_right3_count=0&nfl_s_url3=http://sports.espn.go.com/nfl/boxscore?gameId=321122020&nfl_s_left4=Minnesota%2010%20%20%20^Chicago%2028%20(FINAL)&nfl_s_right4_count=0&nfl_s_url4=http://sports.espn.go.com/nfl/boxscore?gameId=321125003&nfl_s_left5=Oakland%2010%20%20%20^Cincinnati%2034%20(FINAL)&nfl_s_right5_count=0&nfl_s_url5=http://sports.espn.go.com/nfl/boxscore?gameId=321125004&nfl_s_left6=Pittsburgh%2014%20%20%20^Cleveland%2020%20(FINAL)&nfl_s_right6_count=0&nfl_s_url6=http://sports.espn.go.com/nfl/boxscore?gameId=321125005&nfl_s_left7=Buffalo%2013%20%20%20^Indianapolis%2020%20(FINAL)&nfl_s_right7_count=0&nfl_s_url7=http://sports.espn.go.com/nfl/boxscore?gameId=321125011&nfl_s_left8=^Denver%2017%20%20%20Kansas%20City%209%20(FINAL)&nfl_s_right8_count=0&nfl_s_url8=http://sports.espn.go.com/nfl/boxscore?gameId=321125012&nfl_s_left9=Seattle%2021%20%20%20^Miami%2024%20(FINAL)&nfl_s_right9_count=0&nfl_s_url9=http://sports.espn.go.com/nfl/boxscore?gameId=321125015&nfl_s_left10=^Atlanta%2024%20%20%20Tampa%20Bay%2023%20(FINAL)&nfl_s_right10_count=0&nfl_s_url10=http://sports.espn.go.com/nfl/boxscore?gameId=321125027&nfl_s_left11=Tennessee%2019%20%20%20^Jacksonville%2024%20(FINAL)&nfl_s_right11_count=0&nfl_s_url11=http://sports.espn.go.com/nfl/boxscore?gameId=321125030&nfl_s_left12=^Baltimore%2016%20%20%20San%20Diego%2013%20(FINAL%20-%20OT)&nfl_s_right12_count=0&nfl_s_url12=http://sports.espn.go.com/nfl/boxscore?gameId=321125024&nfl_s_left13=^San%20Francisco%2031%20%20%20New%20Orleans%2021%20(FINAL)&nfl_s_right13_count=0&nfl_s_url13=http://sports.espn.go.com/nfl/boxscore?gameId=321125018&nfl_s_left14=^St.%20Louis%2031%20%20%20Arizona%2017%20(FINAL)&nfl_s_right14_count=0&nfl_s_url14=http://sports.espn.go.com/nfl/boxscore?gameId=321125022&nfl_s_left15=Green%20Bay%2010%20%20%20NY%20Giants%2031%20(HALFTIME)&nfl_s_right15_count=0&nfl_s_url15=http://sports.espn.go.com/nfl/boxscore?gameId=321125019&nfl_s_left16=Carolina%20at%20Philadelphia%20(8:30%20PM%20ET)&nfl_s_right16_count=0&nfl_s_url16=http://sports.espn.go.com/nfl/preview?gameId=321126021&nfl_s_count=16&nfl_s_loaded=true";
+
             private EspnFeed _feed;
+            private EspnFeed _halftimeFeed;
 
             [SetUp]
             public void SetUp()
             {
                 var espnFeedParser = new EspnFeedParser(new IEspnGameParser[]{new EspnFinalGameParser(), new EspnInProgressGameParser(), new EspnNotStartedGameParser()});
                 _feed = espnFeedParser.Parse(inGameFeed);
+                _halftimeFeed = espnFeedParser.Parse(halftimeFeed);
             }
 
             [Test]
@@ -101,6 +106,14 @@ namespace nfl_outlast.tests.Feeds
                 gameInProgress.KickoffTime.ShouldBeNull();
                 gameInProgress.Status.ShouldEqual(GameStatus.InProgress);
                 gameInProgress.TimeLeftInQuarter.ShouldEqual(new TimeSpan(0, 9, 30));
+            }
+
+            [Test]
+            public void Should_be_able_to_parse_a_game_at_halftime()
+            {
+                var game = _halftimeFeed.Games[14];
+                game.CurrentQuarter.ShouldEqual(3);
+                game.TimeLeftInQuarter.ShouldEqual(new TimeSpan(0, 15, 0));
             }
         }
     }
