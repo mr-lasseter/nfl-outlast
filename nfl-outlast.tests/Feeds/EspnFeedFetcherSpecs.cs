@@ -13,7 +13,8 @@ namespace nfl_outlast.tests.Feeds
             public void Should_pull_the_feed_from_espn()
             {
                 var feedFetcher = new EspnFeedFetcher();
-                feedFetcher.Fetch().Games.Count.ShouldBeGreaterThan(0);
+                var feed = feedFetcher.Fetch();
+                feed.Games.Count.ShouldBeGreaterThan(0);
             }
         }
     }
