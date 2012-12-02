@@ -8,7 +8,7 @@ namespace nfl_outlast.Feeds
     {
         protected override bool CanParseGameDetails(string gameDetails)
         {
-            return gameDetails.Contains(" IN ") || gameDetails.Contains("HALFTIME");
+            return gameDetails.Contains(" IN ") || gameDetails.Contains("HALFTIME") || gameDetails.Contains("END OF 4TH");
         }
 
         protected override EspnFeedGame ParseGameDetails(string gameDetails)
@@ -42,14 +42,20 @@ namespace nfl_outlast.Feeds
                 var timeLeft = new string(timeAndQuarter[0].Where(char.IsNumber).ToArray());
                 var minutesLeft = int.Parse(timeLeft.Substring(0, 2));
                 var secondsLeft = int.Parse(timeLeft.Substring(2, 2));
-                var quarter = int.Parse(new string(timeAndQuarter[1].Where(char.IsNumber).ToArray()));
+                var quarter = new string(timeAndQuarter[1].Trim('(').Trim(')').ToArray());
                 game.TimeLeftInQuarter = new TimeSpan(0, minutesLeft, secondsLeft);
-                game.CurrentQuarter = quarter;
+                game.CurrentQuarter = quarter.ParseQuarter();
             }
-            else if(timeLeftOnClock.Contains("HALFTIME"))
+            else if (timeLeftOnClock.Contains("HALFTIME"))
             {
                 game.TimeLeftInQuarter = new TimeSpan(0, 15, 0);
-                game.CurrentQuarter = 3;
+                game.CurrentQuarter = GameQuarter.Third;
+            }
+            else if (timeLeftOnClock.Contains("END OF "))
+            {
+                game.TimeLeftInQuarter = new TimeSpan(0, 15, 0);
+                var quarter = timeLeftOnClock.Trim("(END OF ".ToCharArray()).Trim(')').ParseQuarter();
+                game.CurrentQuarter = quarter + 1;
             }
 
             return game;

@@ -154,6 +154,7 @@
     <Compile Include="Feeds\EspnGameParser.cs" />
     <Compile Include="Feeds\EspnInProgressGameParser.cs" />
     <Compile Include="Feeds\EspnNotStartedGameParser.cs" />
+    <Compile Include="Feeds\GameQuarter.cs" />
     <Compile Include="Feeds\GameStatus.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
